@@ -7,5 +7,5 @@ const schema = mongoose.Schema(
     }
 )
  
-const employeemodel=mongoose.Model("employees",schema);
+const employeemodel=mongoose.model("employees",schema);
 module.exports={employeemodel}

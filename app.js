@@ -1,22 +1,28 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
-const employee = require("./models/employee")
+const {employeemodel} = require("./models/employee")
 
 const app = express()
 app.use(cors())
+app.use(express.json())
 
-app.get("/",(req,res)=>{
-    res.send("hello")
-})
-
-app.post("/view",(req,res)=>{
-    res.send("Welcome to my contact page")
-})
-
+mongoose.connect("mongodb+srv://sabeeha02:sabeehamongodb@cluster0.05m7a.mongodb.net/employeedb?retryWrites=true&w=majority&appName=Cluster0")
 app.post("/add",(req,res)=>{
-    res.send("test")
+    let input = req.body
+    let employee = new employeemodel(input)
+    employee.save()
+    //console.log(employee)
+    res.json({"status":"success"})
 })
+
+app.get("/view",(req,res)=>{
+    employeemodel.find().then(
+        (data)=>{
+            res.json(data)
+        }
+    ).catch()
+    })
 
 app.listen(8082,()=>{
     console.log("Server started")
